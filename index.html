@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Riya Chavan 18008 - Train Booking</title>
+<style>
+*{box-sizing:border-box}body{margin:0;font-family:Arial;background:#eef2f7}
+.header{background:#0b3d91;color:#fff;padding:18px;text-align:center}
+.header h2{margin:0}.header p{margin:5px 0 0;font-size:12px}
+.card{background:#fff;margin:15px;padding:15px;border-radius:12px;box-shadow:0 2px 8px #0001;border-left:5px solid #0b3d91}
+.card.fast{border-left-color:#ff6f00}
+.btn{padding:8px 14px;margin:4px;border-radius:20px;border:1px solid #0b3d91;background:#fff;color:#0b3d91;cursor:pointer;font-size:13px}
+.btn.active{background:#0b3d91;color:#fff}
+.summary{background:#fff;border:2px solid #0b3d91;margin:15px;padding:15px;border-radius:12px}
+.row{display:flex;justify-content:space-between;margin:6px 0}
+.total{font-weight:bold;font-size:16px;border-top:1px solid #ddd;padding-top:8px;margin-top:8px}
+.book{width:100%;background:#ff6f00;color:#fff;border:none;padding:13px;border-radius:8px;font-weight:bold;font-size:15px;margin-top:10px;cursor:pointer}
+</style>
+</head>
+<body>
+
+<div class="header">
+<h2>🚆 IRCTC TRAIN BOOKING</h2>
+<p>Riya Chavan - 18008 | Mumbai to Pune | Live Output</p>
+</div>
+
+<div class="card fast">
+<h3>12127 - Intercity Express | 06:15 → 09:30 | 3h 15m</h3>
+<button class="btn" onclick="pick(this,'12127 Intercity','General',120)">General - ₹120</button>
+<button class="btn" onclick="pick(this,'12127 Intercity','Sleeper',250)">Sleeper - ₹250</button>
+<button class="btn" onclick="pick(this,'12127 Intercity','3A',550)">3A - ₹550</button>
+</div>
+
+<div class="card">
+<h3>11007 - Deccan Express | 07:00 → 10:50 | 3h 50m</h3>
+<button class="btn" onclick="pick(this,'11007 Deccan','General',120)">General - ₹120</button>
+<button class="btn" onclick="pick(this,'11007 Deccan','2S',180)">2S - ₹180</button>
+<button class="btn" onclick="pick(this,'11007 Deccan','Sleeper',250)">Sleeper - ₹250</button>
+</div>
+
+<div class="card fast">
+<h3>12123 - Deccan Queen | 17:10 → 20:20 | 3h 10m</h3>
+<button class="btn" onclick="pick(this,'Deccan Queen','Chair Car',450)">Chair Car - ₹450</button>
+<button class="btn" onclick="pick(this,'Deccan Queen','1A',950)">1A - ₹950</button>
+</div>
+
+<div class="summary">
+<h3>🎫 Booking Summary</h3>
+<div class="row"><span>Train:</span><b id="tn">Not Selected</b></div>
+<div class="row"><span>Class:</span><b id="cn">Not Selected</b></div>
+<div class="row"><span>Passengers:</span><span><button onclick="cp(-1)">-</button> <b id="pc">1</b> <button onclick="cp(1)">+</button></span></div>
+<div class="row"><span>Base Fare:</span><span>₹<span id="bf">0</span></span></div>
+<div class="row total"><span>Total (Fare + 25 Fee):</span><span>₹<span id="tf">0</span></span></div>
+<button class="book" onclick="bookNow()">BOOK NOW - Pay ₹<span id="pay">0</span></button>
+<p style="font-size:10px;color:#666;text-align:center;margin-top:8px">Output aayega - Instant PNR - Riya 18008</p>
+</div>
+
+<script>
+let fare=0, pass=1;
+function pick(btn,t,c,f){
+ document.querySelectorAll('.btn').forEach(b=>b.classList.remove('active'));
+ btn.classList.add('active');
+ fare=f;
+ document.getElementById('tn').innerText=t;
+ document.getElementById('cn').innerText=c;
+ document.getElementById('bf').innerText=f;
+ calc();
+}
+function cp(n){
+ pass+=n;
+ if(pass<1) pass=1;
+ if(pass>6) pass=6;
+ document.getElementById('pc').innerText=pass;
+ calc();
+}
+function calc(){
+ let total = fare*pass + 25;
+ document.getElementById('tf').innerText=total;
+ document.getElementById('pay').innerText=total;
+}
+function bookNow(){
+ if(fare==0){alert('Pehle train select karo!');return;}
+ let pnr = Math.floor(Math.random()*9000000000)+1000000000;
+ let total = fare*pass+25;
+ alert('✅ BOOKED!\n\nTrain: '+document.getElementById('tn').innerText+'\nClass: '+document.getElementById('cn').innerText+'\nPassengers: '+pass+'\nTotal: Rs '+total+'\nPNR: '+pnr+'\n\nOutput Success!');
+}
+</script>
+
+</body>
+  </html>
